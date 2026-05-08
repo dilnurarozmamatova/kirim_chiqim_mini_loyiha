@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Expense Tracker</title>
+
+<style>
+body {
+    font-family: Arial;
+    background: #f5f5f5;
+    text-align: center;
+    padding: 20px;
+}
+
+.container {
+    max-width: 500px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+input, select {
+    padding: 10px;
+    margin: 5px;
+    width: 70%;
+}
+
+button {
+    padding: 10px;
+    cursor: pointer;
+}
+
+ul {
+    padding: 0;
+}
+
+li {
+    list-style: none;
+    background: #eee;
+    margin: 5px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>💰 Expense Tracker</h2>
+
+    <h3>Balans: <span id="balance">0</span> so‘m</h3>
+
+    <input type="text" id="desc" placeholder="Nima uchun...">
+    <input type="number" id="amount" placeholder="Summa">
+    
+    <select id="type">
+        <option value="income">Daromad</option>
+        <option value="expense">Xarajat</option>
+    </select>
+
+    <br>
+    <button onclick="addTransaction()">Qo‘shish</button>
+
+    <ul id="list"></ul>
+</div>
+
+<script>
+let balance = 0;
+
+function addTransaction() {
+    let desc = document.getElementById("desc").value;
+    let amount = parseInt(document.getElementById("amount").value);
+    let type = document.getElementById("type").value;
+
+    if (!desc || !amount) return;
+
+    let li = document.createElement("li");
+
+    if (type === "income") {
+        balance += amount;
+        li.innerHTML = `➕ ${desc} : +${amount} so‘m`;
+    } else {
+        balance -= amount;
+        li.innerHTML = `➖ ${desc} : -${amount} so‘m`;
+    }
+
+    let btn = document.createElement("button");
+    btn.innerText = "❌";
+    btn.onclick = () => li.remove();
+
+    li.appendChild(btn);
+    document.getElementById("list").appendChild(li);
+
+    document.getElementById("balance").innerText = balance;
+
+    document.getElementById("desc").value = "";
+    document.getElementById("amount").value = "";
+}
+</script>
+
+</body>
+</html>
